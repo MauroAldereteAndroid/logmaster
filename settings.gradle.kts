@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "LogMaster"
 include(":app")
+include(":LogMaster")
