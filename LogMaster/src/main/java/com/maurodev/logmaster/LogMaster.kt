@@ -1,43 +1,77 @@
 package com.maurodev.logmaster
 
 import android.util.Log
+import com.maurodev.logmaster.analytics.AnalyticsLog
 
-class LogMaster {
+class LogMaster: FunctionalitiesLogs {
+
 
     /**
-     * Esta funcion debe agregarse en todos los sitios del proyecto que debe logearse.
+     * Importante :
+     *
+     * Esta clase contiene
+     *
+     * Funciones de logeo. public
+     *
+     * Envio de registros a la parte de analisis. private
+     *
+     *
+     * Mostrar al usuario los logs. public
+     *
+     * Permitir exportar los logs. public
+     *
+     *
      */
-    fun executeLog() {
-        // if debug condition
+
+    private var analyticsLog: AnalyticsLog? = null
+    private var showLog = null
+
+    /**
+     * Funciones para ejecutar un log desde un repositorio externo!
+     */
+    override fun executeErrorLog(log: String?, buildConfig: Boolean) {
+        // temp test
+        Log.e(LOG_MASTER_ERROR, log?: LOG_MASTER_EMPTY)
+    }
+    override fun executeWarningLog(log: String?, buildConfig: Boolean) {
+        // temp test
+        Log.e(LOG_MASTER_WARNING, log?: LOG_MASTER_EMPTY)
+    }
+    override fun executeSuccessLog(log: String?,  buildConfig: Boolean) {
+        // temp test
+        Log.e(LOG_MASTER_SUCCESS, log?: LOG_MASTER_EMPTY)
+    }
+    override fun executeDevLog(log: String?,  buildConfig: Boolean) {
+        // temp test
+        Log.d(LOG_MASTER_DEV, log?: LOG_MASTER_EMPTY)
     }
 
+
     /**
-     * Muestra un analisis de los logs y puede exportarse en distintos lugares.
+     * Esta funcion deberia ser inaccessible para el usuario y debe ser la encargada de logear y guardar toda la informacion necesaria.
      */
-    fun logsAnalytics() {
+    private fun logsAnalytics() {
+        analyticsLog = AnalyticsLog() //Instance
         // Mas frecuentes
         // Mas graves y frecuentes a menos
         // mas filtros...
     }
 
     /**
-     * Muestra la visualizacion de los logs en la UI
+     * Muestra los logs
      */
-    fun showLogsUi() {}
+    fun showLogs() {}
 
     /**
      * Exporta los logs fuera de la app. CVS, PDF o WEB
      */
     fun exportLogs() {}
 
-    fun obtainTestLog() = TEST_LOG
-
-    fun showTestLog() {
-        Log.i(LOG_MODULE, TEST_LOG)
-    }
-
     companion object {
-        const val TEST_LOG = "TestLog of dependence"
-        const val LOG_MODULE = "LogMaster"
+        private const val LOG_MASTER_ERROR = "LOG_MASTER_ERROR"
+        private const val LOG_MASTER_EMPTY = "Empty log, please add useful information. "
+        private const val LOG_MASTER_WARNING = "LOG_MASTER_WARNING"
+        private const val LOG_MASTER_SUCCESS = "LOG_MASTER_SUCCESS"
+        private const val LOG_MASTER_DEV = "LOG_MASTER_DEV"
     }
 }
